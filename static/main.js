@@ -42,7 +42,7 @@ const sendMemo = (e) => {
     e.preventDefault();
 
     const data = {
-        'memo_id': String(new Date),
+        'memo_id': String(new Date().getTime()),
         'memo_content': input.value,
     }
 
@@ -63,14 +63,13 @@ const sendMemo = (e) => {
 }
 
 const getMemos = async () => {
-    const data = await fetch('/memos', {
+    const res = await fetch('/memos', {
         headers: {
             'Content-Type': 'applicaton/json',
         }
-    }).then(
-        res => res.json()
-    )
-
+    })
+    const jsonData = await res.json()
+    data = JSON.parse(jsonData)
     data.forEach(element => {
         const li = document.createElement('li')
         const updateBtn = document.createElement('button')
